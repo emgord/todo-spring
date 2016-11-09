@@ -1,10 +1,7 @@
 package com.todo;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Todo {
@@ -15,6 +12,13 @@ public class Todo {
     private String action;
     private String description;
     private Boolean completed;
+
+    @PrePersist
+    void preInsert() {
+        completed = false;
+    }
+
+    public void setId(Long id) { this.id = id; }
 
     public Long getId() { return id; }
 

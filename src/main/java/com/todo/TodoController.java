@@ -28,4 +28,9 @@ public class TodoController {
         return "todoList";
     }
 
+    @RequestMapping(value="/todos", method=RequestMethod.POST)
+    public String createTodo(Todo todo) {
+        todoRepository.save(todo);
+        return "redirect:/";
+    }
 }

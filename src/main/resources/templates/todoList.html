@@ -8,11 +8,20 @@
 
 <body>
 <div class="container">
+    <div class="jumbotron">
+        <h2>To Do List</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-mod-offset-3">
+            <form method="POST" action="/todos">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="What needs to be done?" name="action"></input>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <div class="jumbotron">
-                <h2>To Do List</h2>
-            </div>
             <ul th:unless="${#lists.isEmpty(todos)}">
                 <li th:each="todo : ${todos}">
                     <span th:text="${todo.action}"></span>
