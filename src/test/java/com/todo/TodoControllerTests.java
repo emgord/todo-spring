@@ -26,6 +26,9 @@ public class TodoControllerTests {
     @Autowired
     private WebApplicationContext webContext;
 
+    @Autowired
+    private TodoRepository todoRepository;
+
     private MockMvc mockMvc;
 
     @Before
@@ -33,6 +36,7 @@ public class TodoControllerTests {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webContext)
                 .build();
+        this.todoRepository.deleteAllInBatch();
     }
 
     @Test
