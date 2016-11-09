@@ -13,6 +13,11 @@
             <div class="jumbotron">
                 <h2>To Do List</h2>
             </div>
+            <ul th:unless="${#lists.isEmpty(todos)}">
+                <li th:each="todo : ${todos}">
+                    <span th:text="${todo.action}"></span>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
