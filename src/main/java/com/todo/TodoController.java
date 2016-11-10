@@ -35,8 +35,8 @@ public class TodoController {
         return "redirect:/";
     }
 
-    @RequestMapping(value="/todos/{todoId}/complete", method=RequestMethod.PUT)
-    public String completeTodo(@PathVariable("todoId") Long todoId) {
+    @RequestMapping(value="/todos/{todoId}/toggle", method=RequestMethod.POST)
+    public String toggleTodo(@PathVariable("todoId") Long todoId) {
         Todo todo = todoRepository.findOne(todoId);
         todo.toggleCompleted();
         todoRepository.save(todo);

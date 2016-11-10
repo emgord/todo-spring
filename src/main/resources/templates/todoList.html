@@ -22,14 +22,14 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <ul th:unless="${#lists.isEmpty(todos)}">
-                <li th:each="todo : ${todos}">
-                    <span th:text="${todo.action}"></span>
-                    <a th:unless="${todo.completed}" th:href="@{/todos/${todo.id}/complete}">
-                        mark complete
-                    </a>
-                </li>
-            </ul>
+            <div th:unless="${#lists.isEmpty(todos)}">
+                <div th:each="todo : ${todos}" th:attrappend="class=${todo.completed ? 'complete' : 'incomplete'}">
+                    <form th:action="@{/todos/{id}/toggle(id=${todo.id})}" method="POST">
+                        <input class="todo-item-submit" type="submit" th:attrappend="value=${todo.completed ? '✓' : '◻'}"></input>
+                        <span th:text="${todo.action}"></span>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
