@@ -81,4 +81,20 @@ public class TodoControllerTests {
                 .andExpect(model().attributeExists("todos"))
                 .andExpect(model().attribute("todos", contains(hasProperty("completed", is(true)))));
     }
+
+    @Test
+    public void deleteTodo() throws Exception {
+        Todo todo = new Todo("I'm done", "Cool beans");
+        todoRepository.save(todo);
+        mockMvc.perform(get("/"))
+                .andExpect(model().attribute("todos", hasSize(1)));
+        mockMvc.perform(post("/todos/" + todo.getId().toString() + "/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("location", "/"));
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("todoList"))
+                .andExpect(model().attributeExists("todos"))
+                .andExpect(model().attribute("todos", is(empty())));
+    }
 }

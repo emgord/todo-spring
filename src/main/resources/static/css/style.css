@@ -6,11 +6,15 @@ body {
     text-decoration: line-through;
 }
 
-.todo-item-submit {
+.todo-item-submit, .todo-item-delete {
     background-color: Transparent;
     background-repeat:no-repeat;
     border: none;
     cursor:pointer;
     overflow: hidden;
     outline:none;
+}
+
+form.todo-item {
+    display: inline-block;
 }
