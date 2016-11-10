@@ -25,6 +25,9 @@
             <ul th:unless="${#lists.isEmpty(todos)}">
                 <li th:each="todo : ${todos}">
                     <span th:text="${todo.action}"></span>
+                    <a th:unless="${todo.completed}" th:href="@{/todos/${todo.id}/complete}">
+                        mark complete
+                    </a>
                 </li>
             </ul>
         </div>

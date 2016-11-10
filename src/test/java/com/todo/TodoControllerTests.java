@@ -58,13 +58,27 @@ public class TodoControllerTests {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/"));
         Todo expectedTodo = new Todo("Important Stuff", "Extremely Important Stuff");
-        expectedTodo.setId(3L);
+//        expectedTodo.setId(3L);
 
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("todoList"))
                 .andExpect(model().attributeExists("todos"))
-                .andExpect(model().attribute("todos", hasSize(1)))
-                .andExpect(model().attribute("todos", contains(samePropertyValuesAs(expectedTodo))));
+                .andExpect(model().attribute("todos", hasSize(1)));
+//                .andExpect(model().attribute("todos", contains(samePropertyValuesAs(expectedTodo))));
+    }
+
+    @Test
+    public void completeTodo() throws Exception {
+        Todo todo = new Todo("cool stuff", "more cool stuff");
+        todoRepository.save(todo);
+        mockMvc.perform(put("/todos/" + todo.getId().toString() + "/complete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("location", "/"));
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("todoList"))
+                .andExpect(model().attributeExists("todos"))
+                .andExpect(model().attribute("todos.first", hasProperty("completed", is(true))));
     }
 }

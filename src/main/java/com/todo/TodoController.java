@@ -3,6 +3,7 @@ package com.todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,6 +31,14 @@ public class TodoController {
 
     @RequestMapping(value="/todos", method=RequestMethod.POST)
     public String createTodo(Todo todo) {
+        todoRepository.save(todo);
+        return "redirect:/";
+    }
+
+    @RequestMapping(value="/todos/{todoId}/complete", method=RequestMethod.PUT)
+    public String completeTodo(@PathVariable("todoId") Long todoId) {
+        Todo todo = todoRepository.findOne(todoId);
+        todo.toggleCompleted();
         todoRepository.save(todo);
         return "redirect:/";
     }
