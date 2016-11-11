@@ -31,6 +31,7 @@
                     <form th:action="@{/todos/{id}/delete(id=${todo.id})}" method="POST" class="todo-item">
                         <input class="todo-item-delete" type="submit" value="X"></input>
                     </form>
+                    <a th:href="@{/todos/{id}/edit(id=${todo.id})}">edit</a>
                 </div>
             </div>
         </div>

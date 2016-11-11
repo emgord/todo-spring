@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit To Do</title>
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}"></link>
+    <link rel="stylesheet" th:href="@{/css/style.css}"></link>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h3>Edit To Do</h3>
+            <form th:action="@{/todos/{id}(id=${todo.id})}" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" th:attr="value=${todo.action}" name="action"></input>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -97,4 +97,38 @@ public class TodoControllerTests {
                 .andExpect(model().attributeExists("todos"))
                 .andExpect(model().attribute("todos", is(empty())));
     }
+
+    @Test
+    public void editTodo() throws Exception {
+        Todo todo = new Todo("Original Task", "Hey Hey");
+        todoRepository.save(todo);
+        mockMvc.perform(post("/todos/" + todo.getId().toString())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("action", "New Task"))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(header().string("location", "/"));
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("todoList"))
+                .andExpect(model().attributeExists("todos"))
+                .andExpect(model().attribute("todos", contains(hasProperty("action", is("New Task")))));
+    }
+
+    @Test
+    public void editTodoForm() throws Exception {
+        Todo todo = new Todo("cool stuff", "more cool stuff");
+        todoRepository.save(todo);
+        mockMvc.perform(get("/todos/" + todo.getId().toString() + "/edit"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("editTodo"))
+                .andExpect(model().attributeExists("todo"))
+                .andExpect(model().attribute("todo", hasProperty("action", is("cool stuff"))));
+    }
+
+    @Test
+    public void editNonexisitngTodo() throws Exception {
+        mockMvc.perform(get("/todos/1/edit"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("location", "/"));
+    }
 }
